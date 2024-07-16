@@ -76,9 +76,11 @@ const Navbar1 = () => {
                   <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left">
                     Settings
                   </button>
-                  <button onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left">
-                    Logout
-                  </button>
+                  {isLoggedIn && (
+                    <button onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left">
+                      Logout
+                    </button>
+                  )}
                 </div>
               )}
             </div>

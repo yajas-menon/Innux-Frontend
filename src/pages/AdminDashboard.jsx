@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Navbar1 from '../components/Navbar1';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loader from '../components/Loader';
 
 
 
 
 const AdminDashboard = () => {
     const [vendors, setVendors] = useState([]);
+    const [loading,setLoading] = useState(false)
 
     useEffect(() => {
         const fetchVendors = async () => {
@@ -24,28 +26,35 @@ const AdminDashboard = () => {
     }, []);
 
     const handleAccept = async (id) => {
+        setLoading(true)
         try {
             await axios.patch(`https://proj-contract-gpt-server.vercel.app/api/auth/acceptvendors/${id}/accept`);
             setVendors(vendors.map(vendor => vendor._id === id ? { ...vendor, status: 'Accepted' } : vendor));
+            setLoading(false)
             toast.success("Vendor Granted Access")
 
         } catch (error) {
+            setLoading(false)
             console.error('Error updating vendor status:', error);
         }
     };
 
     const handleReject = async (id) => {
+        setLoading(true)
         try {
             await axios.patch(`https://proj-contract-gpt-server.vercel.app/api/auth/rejectvendors/${id}/reject`);
             setVendors(vendors.map(vendor => vendor._id === id ? { ...vendor, status: 'Rejected' } : vendor));
+            setLoading(false)
             toast.error("Vendor Rejected")
         } catch (error) {
+            setLoading(false)
             console.error('Error updating vendor status:', error);
         }
     };
     return (
         <div>
             <Navbar1 />
+            <Loader isLoading={loading}/>
             <div className="p-8 mt-4 mx-10">
                 <div className="text-4xl font-bold mb-4">Vendor Management</div>
                 <hr />

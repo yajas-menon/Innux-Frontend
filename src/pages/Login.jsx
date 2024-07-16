@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar1 from "../components/Navbar1"; // Import the Navbar component
 import axios from "axios";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/AuthContext";
 import { useVendorAuth } from '../context/VendorAuthContext';
+import Loader from "../components/Loader";
 
 
 
@@ -21,6 +22,7 @@ export default function Login() {
   const [userType, setUserType] = useState("User"); 
   const { login } = useAuth();
   const { isVendorLoggedIn, vendorRole, vendorLogin, vendorLogout } = useVendorAuth();
+  const [loading, setLoading] = useState(false);
 
   // const handleLogin = async () => {
   //   try {
@@ -48,6 +50,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
+        setLoading(true)
       const loginRoute = userType === "Vendor" ? "auth/vendorlogin" : "auth/login";
       const response = await axios.post(
         `https://proj-contract-gpt-server.vercel.app/api/${loginRoute}`,
@@ -58,6 +61,7 @@ export default function Login() {
       );
       const role = response.data.user.role;
       login(role);
+      setLoading(false)
       toast.success("Login successful");
       if (role === "reviewer") {
         navigate("/managementdashboard");
@@ -71,11 +75,13 @@ export default function Login() {
       
 
     } catch (error) {
+        setLoading(false)
       toast.error("Invalid email or password");
     }
   };
 
   const handleRegister = async () => {
+    setLoading(true)
     try {
       await axios.post("https://proj-contract-gpt-server.vercel.app/api/auth/register", {
         username: formData.name,
@@ -84,8 +90,10 @@ export default function Login() {
         role: formData.role,
       });
       setMode("login"); // Switch to login mode after successful registration
+      setLoading(false)
       toast.success("Registration successful. Please login.");
     } catch (error) {
+        setLoading(false)
       toast.error("Error during registration. Please try again.");
     }
   };
@@ -96,9 +104,18 @@ export default function Login() {
     });
   };
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+  }, []);
+
+
   return (
     <div>
       <Navbar1 />
+      <Loader isLoading={loading}/>
       <div className="min-h-screen bg-cover bg-center">
         <div className="min-h-screen flex items-center justify-center p-6">
           <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden flex">

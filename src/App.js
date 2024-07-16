@@ -10,6 +10,7 @@ import AdhocPage from './pages/AdhocPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import VendorPage from './pages/VendorPage';
 import ContractFlowPage from './pages/ContractFlowPage';
+import TprmPage from './pages/TprmPage'
 
 
 function App() {
@@ -28,12 +29,14 @@ function App() {
       <Routes>
       <Route exact path='/' element={<LandingPage />}></Route>
       <Route exact path='/contractflowpage' element={<ContractFlowPage />}></Route>
+      <Route exact path='/Tprmpage' element={<TprmPage/>}></Route>
       <Route exact path='/login' element={<Login />}></Route>
       <Route exact path='admindashboard' element={<ProtectedRoute><AdminDashboard/></ProtectedRoute>}></Route>
       <Route exact path='/managementdashboard' element={<ProtectedRoute><ManagementDashboard/></ProtectedRoute>}></Route>
       <Route exact path='/vendoronboarding' element={<ProtectedRoute><VendorOnboarding/></ProtectedRoute>}></Route>
       <Route exact path='/Adhoc' element={<ProtectedRoute><AdhocPage/></ProtectedRoute>}></Route>
       <Route exact path='/vendorpage' element={<VendorPage />}></Route>
+
       
       </Routes>
     </Router>

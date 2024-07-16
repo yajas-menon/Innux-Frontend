@@ -14,11 +14,15 @@ const Navbar = () => {
         </div>
         <div className="flex items-center space-x-8">
           <nav className="space-x-8">
+          <a href="/contractflowpage" className="text-zinc-900 font-bold relative group">
+              Pricing
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple transition-all group-hover:w-full"></span>
+            </a>
             <a href="/contractflowpage" className="text-zinc-900 font-bold relative group">
               ContractFlow
               <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple transition-all group-hover:w-full"></span>
             </a>
-            <a href="#" className="text-zinc-900 font-bold relative group">
+            <a href="/TprmPage" className="text-zinc-900 font-bold relative group">
               TPRM Solutions
               <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple transition-all group-hover:w-full"></span>
             </a>

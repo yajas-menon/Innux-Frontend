@@ -21,11 +21,13 @@ const VendorOnboarding = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     try {
       const response = await axios.post('https://proj-contract-gpt-server.vercel.app/api/auth/vendors', formData);
 
       if (response.status === 201) {
+        setLoading(false)
         toast.success("Vendor Onboarded Successfully")
         setFormData({
           vendorName: '',
@@ -34,9 +36,11 @@ const VendorOnboarding = () => {
           industry: ''
         });
       } else {
+        setLoading(false)
         toast.error("Failed to creater vendor")
       }
     } catch (error) {
+      setLoading(false)
       console.error('Error:', error);
       toast.error('Error registering vendor')
     }
@@ -54,7 +58,7 @@ const VendorOnboarding = () => {
       <Navbar1/>
       <Loader isLoading={loading} />
       <div className="flex mt-2">
-        <img src={vendorimage1} alt='vendor image' className="w-1/2 h-1/2 object-cover" />
+        <img src={vendorimage1} aria-hidden alt='vendor image' className="w-1/2 h-1/2 object-cover" />
 
         <div className="min-h-screen w-1/2 flex items-center justify-center bg-white">
           <div className="bg-white border border-slate-800 p-8 rounded-lg shadow-lg w-3/4 max-w-2xl">
